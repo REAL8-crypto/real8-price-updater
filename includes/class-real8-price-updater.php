@@ -13,6 +13,9 @@ class Real8_Price_Updater {
 
         // Hook to display XLM price on product page
         add_action('woocommerce_single_product_summary', [$this, 'display_xlm_price'], 11);
+
+        // Enqueue styles
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
     }
 
     /**
@@ -65,6 +68,8 @@ class Real8_Price_Updater {
         try {
             $client = new ApiClient(ApiClient::NETWORK_PUBLIC);
             $asset_code = 'REAL8';
+
+
             $issuer = 'GBVYYQ7XXRZW6ZCNNCL2X2THNPQ6IM4O47HAA25JTAG7Z3CXJCQ3W4CD';
 
             $trades = $client->getTrades([
@@ -170,7 +175,7 @@ class Real8_Price_Updater {
         }
 
         // Check if XLM price display is enabled
-        if (!get_option('real8_show_xlm_price', 'yes') === 'yes') {
+        if (get_option('real8_show_xlm_price', 'yes') !== 'yes') {
             return;
         }
 
@@ -185,13 +190,27 @@ class Real8_Price_Updater {
     }
 
     /**
+     * Enqueue styles for XLM price display
+     */
+    public function enqueue_styles() {
+        if (is_product()) {
+            global $product;
+            $real8_product_id = get_option('real8_product_id', '');
+            if ($product->get_id() == $real8_product_id && get_option('real8_show_xlm_price', 'yes') === 'yes') {
+                wp_enqueue_style(
+                    'real8-price-updater',
+                    REAL8_PLUGIN_URL . 'assets/css/real8-price-updater.css',
+                    [],
+                    '1.1.0'
+                );
+            }
+        }
+    }
+
+    /**
      * Deactivate the cron event on plugin deactivation
      */
     public static function deactivate() {
         wp_clear_scheduled_hook('real8_price_update_event');
         delete_transient('real8_price_data');
     }
-}
-
-// Register deactivation hook
-register_deactivation_hook(REAL8_PLUGIN_DIR . 'real8-price-updater.php', ['Real8_Price_Updater', 'deactivate']);
