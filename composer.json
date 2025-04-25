@@ -1,0 +1,12 @@
+{
+    "name": "REAL8/real8-price-updater",
+    "description": "WordPress plugin to update REAL8 WooCommerce product price using Stellar Horizon",
+    "require": {
+        "loebo/php-stellar-sdk": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Real8\\": "includes/"
+        }
+    }
+}
