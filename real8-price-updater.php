@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: REAL8 Price Updater
- * Description: Automatically updates the REAL8 WooCommerce product price based on Stellar Horizon trade data.
- * Version: 1.0.0
- * Author: Your Name
+ * Description: Automatically updates the REAL8 WooCommerce product price based on Stellar Horizon trade data and displays XLM price.
+ * Version: 2.1.0
+ * Author: Rafael Minuesa
  * License: GPL-2.0+
  * Text Domain: real8-price-updater
  */
