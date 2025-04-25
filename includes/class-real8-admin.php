@@ -31,6 +31,11 @@ class Real8_Admin {
             'sanitize_callback' => 'sanitize_text_field',
             'default' => ''
         ]);
+
+        register_setting('real8_settings_group', 'real8_show_xlm_price', [
+            'sanitize_callback' => 'sanitize_text_field',
+            'default' => 'yes'
+        ]);
     }
 
     /**
@@ -53,6 +58,15 @@ class Real8_Admin {
                         <td>
                             <input type="text" name="real8_product_id" id="real8_product_id" value="<?php echo esc_attr(get_option('real8_product_id', '')); ?>" class="regular-text" />
                             <p class="description"><?php esc_html_e('Enter the WooCommerce Product ID for the REAL8 product. You can find this in the Products admin page.', 'real8-price-updater'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="real8_show_xlm_price"><?php esc_html_e('Show XLM Price', 'real8-price-updater'); ?></label>
+                        </th>
+                        <td>
+                            <input type="checkbox" name="real8_show_xlm_price" id="real8_show_xlm_price" value="yes" <?php checked(get_option('real8_show_xlm_price', 'yes'), 'yes'); ?> />
+                            <p class="description"><?php esc_html_e('Display the equivalent XLM price on the REAL8 product page.', 'real8-price-updater'); ?></p>
                         </td>
                     </tr>
                 </table>
